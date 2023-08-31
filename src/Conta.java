@@ -9,7 +9,7 @@ public class Conta {
 
     public Conta(){
         Conta.total++;
-        this.id = id;
+//        this.id = id;
         this.nome = nome;
         this.email = email;
         this.senha = senha;

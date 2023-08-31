@@ -8,9 +8,9 @@ public class Transacao {
 
     private static int totalTransacoes;
 
-    public Transacao(int id, String data, String descricao, double valor) {
+    public Transacao(String data, String descricao, double valor) {
         Transacao.totalTransacoes++;
-        this.id = id;
+//        this.id = id;
         this.data = data;
         this.descricao = descricao;
         this.valor = valor;
