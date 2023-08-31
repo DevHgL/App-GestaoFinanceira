@@ -10,7 +10,7 @@ public class Transacao {
 
     public Transacao(String data, String descricao, double valor) {
         Transacao.totalTransacoes++;
-//        this.id = id;
+        this.id = Transacao.totalTransacoes++;
         this.data = data;
         this.descricao = descricao;
         this.valor = valor;
