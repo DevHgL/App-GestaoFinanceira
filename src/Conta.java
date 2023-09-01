@@ -1,23 +1,21 @@
 import java.util.ArrayList;
 import java.util.List;
+
 public class Conta {
     private int id;
     private String nome;
     private String email;
     private String senha;
     private static int total;
-
     private List<Transacao> transacoes;
 
-    public Conta(String nome, String email, String senha){
+    public Conta(String nome, String email, String senha) {
         Conta.total++;
         this.id = Conta.total;
         this.nome = nome;
         this.email = email;
         this.senha = senha;
         this.transacoes = new ArrayList<>();
-
-
     }
 
     public static int getTotal() {
@@ -26,10 +24,6 @@ public class Conta {
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getNome() {
@@ -56,19 +50,16 @@ public class Conta {
         this.senha = senha;
     }
 
-    public List<Transacao> getTransacoes() { return transacoes; }
+    public List<Transacao> getTransacoes() {
+        return transacoes;
+    }
 
-    public void adicionarTransacao(Transacao transacao) { transacoes.add(transacao); }
+    public void adicionarTransacao(Transacao transacao) {
+        transacoes.add(transacao);
+    }
 
     @Override
     public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Conta de ").append(nome).append(" com as transações:\n");
-
-        for (Transacao transacao : transacoes) {
-            stringBuilder.append("Descrição: ").append(transacao.getDescricao()).append("\n");
-        }
-
-        return stringBuilder.toString();
+        return "Conta [id=" + id + ", nome=" + nome + ", email=" + email + ", senha=" + senha + "]";
     }
 }
