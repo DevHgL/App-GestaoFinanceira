@@ -1,5 +1,6 @@
 public class Transacao {
     private int id;
+    
     private String data;
 
     private String descricao;
@@ -12,6 +13,13 @@ public class Transacao {
         this.data = data;
         this.descricao = descricao;
         this.valor = valor;
+    }
+
+    public String obterCategoria(){
+        String categoria = getDescricao();
+
+        return "a sua categoria é: " + categoria;
+
     }
 
     public int getId() {
@@ -34,8 +42,8 @@ public class Transacao {
         return descricao;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setDescricao(String desc) {
+        this.descricao = desc;
     }
 
     public double getValor() {

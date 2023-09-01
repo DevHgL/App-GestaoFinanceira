@@ -18,9 +18,20 @@ public class Main {
         Carro.setData("12/12/2023");
         Carro.setDescricao("Comprei um carro 0km, modelo Polo e de ano 2023");
         Carro.setValor(93_100.23);
+
+
+        Despesas store = new  Despesas("debito", "mercado");
+
+        store.setDescricao("teste");
+
+
         System.out.println(teste.getNome());
         System.out.println(teste.getEmail());
         System.out.println(teste.getTransacao());
+        System.out.println(Pizza.getDescricao()); 
+        System.out.println(store.getFormaDePagamento());
+        System.out.println(store.getDescricao());
+        System.out.println(store.obterCategoria());
 
 
     }
