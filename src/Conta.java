@@ -6,6 +6,7 @@ public class Conta {
     private String nome;
     private String email;
     private String senha;
+    private boolean logado; // Novo campo para rastrear o status de login.
     private static int total;
     private List<Transacao> transacoes;
 
@@ -15,6 +16,7 @@ public class Conta {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
+        this.logado = false; // Inicialmente, o usuário não está logado.
         this.transacoes = new ArrayList<>();
     }
 
@@ -48,6 +50,23 @@ public class Conta {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public boolean isLogado() {
+        return logado;
+    }
+
+    public void fazerLogin(String senha) {
+        if (this.senha.equals(senha)) {
+            logado = true;
+            System.out.println("Login bem-sucedido!");
+        } else {
+            System.out.println("Senha incorreta. Login falhou.");
+        }
+    }
+
+    public void fazerLogout() {
+        logado = false;
     }
 
     public List<Transacao> getTransacoes() {
