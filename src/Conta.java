@@ -2,13 +2,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Conta {
-    private int id;
+    private final int id;
     private String nome;
     private String email;
     private String senha;
     private boolean logado; // Novo campo para rastrear o status de login.
     private static int total;
-    private List<Transacao> transacoes;
+    private final List<Transacao> transacoes;
 
     public Conta(String nome, String email, String senha) {
         Conta.total++;
