@@ -3,7 +3,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-    private static List<Conta> contas = new ArrayList<>();
+    private static final List<Conta> contas = new ArrayList<>();
     private static Conta contaLogada = null;
 
     public static void main(String[] args) {
@@ -11,19 +11,19 @@ public class Main {
         int opcao;
 
         do {
-            System.out.println("Menu:");
+            System.out.println("Menu: ");
 
             if (contaLogada == null) {
-                System.out.println("1. Criar Conta");
-                System.out.println("2. Fazer Login");
-                System.out.println("3. Sair");
+                System.out.println("1. Criar Conta.");
+                System.out.println("2. Fazer Login.");
+                System.out.println("3. Sair.");
             } else {
-                System.out.println("4. Cadastrar Transacao");
-                System.out.println("5. Editar Transacao");
-                System.out.println("6. Exibir Transacoes");
-                System.out.println("7. Excluir Transacao");
-                System.out.println("8. Fazer Logout");
-                System.out.println("9. Sair");
+                System.out.println("4. Cadastrar Transacao.");
+                System.out.println("5. Editar Transacao.");
+                System.out.println("6. Exibir Transacoes.");
+                System.out.println("7. Excluir Transacao.");
+                System.out.println("8. Fazer Logout.");
+                System.out.println("9. Sair.");
             }
 
             System.out.print("Escolha uma opcao: ");
@@ -31,35 +31,15 @@ public class Main {
             scanner.nextLine(); // Limpar a quebra de linha deixada pelo nextInt()
 
             switch (opcao) {
-                case 1:
-                    criarConta(scanner);
-                    break;
-                case 2:
-                    fazerLogin(scanner);
-                    break;
-                case 3:
-                    System.out.println("Saindo do programa. Adeus!");
-                    break;
-                case 4:
-                    cadastrarTransacao(scanner);
-                    break;
-                case 5:
-                    editarTransacao(scanner);
-                    break;
-                case 6:
-                    exibirTransacoes();
-                    break;
-                case 7:
-                    excluirTransacao(scanner);
-                    break;
-                case 8:
-                    fazerLogout();
-                    break;
-                case 9:
-                    System.out.println("Saindo do programa. Adeus!");
-                    break;
-                default:
-                    System.out.println("Opcao invalida. Tente novamente.");
+                case 1 -> criarConta(scanner);
+                case 2 -> fazerLogin(scanner);
+                case 3, 9 -> System.out.println("Saindo do programa. Adeus!");
+                case 4 -> cadastrarTransacao(scanner);
+                case 5 -> editarTransacao(scanner);
+                case 6 -> exibirTransacoes();
+                case 7 -> excluirTransacao(scanner);
+                case 8 -> fazerLogout();
+                default -> System.out.println("Opcao invalida. Tente novamente.");
             }
         } while (opcao != 9);
 
@@ -206,4 +186,5 @@ public class Main {
 
         System.out.println("Transacao nao encontrada.");
     }
+
 }
