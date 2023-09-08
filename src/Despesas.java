@@ -4,10 +4,15 @@ public class Despesas extends Transacao {
 
     private String categoria;
 
-    public Despesas(String formaDePagamento, String categoria) {
-        this.formaDePagamento = formaDePagamento;
+    public Despesas(int id, String data, String descricao, double valor, String formaDePagamento, String categoria) {
+        
+       
+        super(id, data, descricao, valor, categoria, categoria);
+                this.formaDePagamento = formaDePagamento;
+                
+               
         this.categoria = categoria;
-    }
+            }
 
 
     public String getFormaDePagamento() {

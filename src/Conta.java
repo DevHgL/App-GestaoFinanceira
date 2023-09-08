@@ -1,26 +1,31 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Conta {
-    private int id;
+    private final int id;
     private String nome;
     private String email;
     private String senha;
+    private boolean logado; // Novo campo para rastrear o status de login.
+    private static int total;
+    private final List<Transacao> transacoes;
 
-    Transacao transacao;
-
-    public Conta(){
-
-        this.id = id;
+    public Conta(String nome, String email, String senha) {
+        Conta.total++;
+        this.id = Conta.total;
         this.nome = nome;
         this.email = email;
         this.senha = senha;
+        this.logado = false; // Inicialmente, o usuário não está logado.
+        this.transacoes = new ArrayList<>();
+    }
 
+    public static int getTotal() {
+        return total;
     }
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getNome() {
@@ -47,11 +52,33 @@ public class Conta {
         this.senha = senha;
     }
 
-    public void setTransacao(Transacao transacao) {
-        this.transacao = transacao;
+    public boolean isLogado() {
+        return logado;
     }
 
-    public Transacao getTransacao() {
-        return transacao;
+    public void fazerLogin(String senha) {
+        if (this.senha.equals(senha)) {
+            logado = true;
+            System.out.println("Login bem-sucedido!");
+        } else {
+            System.out.println("Senha incorreta. Login falhou.");
+        }
+    }
+
+    public void fazerLogout() {
+        logado = false;
+    }
+
+    public List<Transacao> getTransacoes() {
+        return transacoes;
+    }
+
+    public void adicionarTransacao(Transacao transacao) {
+        transacoes.add(transacao);
+    }
+
+    @Override
+    public String toString() {
+        return "Conta [id=" + id + ", nome=" + nome + ", email=" + email + ", senha=" + senha + "]";
     }
 }

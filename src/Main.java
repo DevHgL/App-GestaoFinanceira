@@ -1,38 +1,200 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+
+
 public class Main {
+    private static final List<Conta> contas = new ArrayList<>();
+    private static Conta contaLogada = null;
+    private static HistoricoTransacao historico = new HistoricoTransacao();
+
     public static void main(String[] args) {
-        Conta teste = new Conta();
-        teste.setId(1);
-        teste.setNome("Hugo Leonardo");
-        teste.setEmail("hleo@cucu.com");
-        teste.setId(01);
-        teste.setSenha("LLL");
+        Scanner scanner = new Scanner(System.in);
+        int opcao;
 
-        Transacao Pizza = new Transacao();
-        Pizza.setId(1);
-        Pizza.setData("12/11/2023");
-        Pizza.setDescricao("Dia do lixo");
-        Pizza.setValor(110.23);
+        do {
+            System.out.println("Menu: ");
 
-        Transacao Carro = new Transacao();
-        Carro.setId(2);
-        Carro.setData("12/12/2023");
-        Carro.setDescricao("Comprei um carro 0km, modelo Polo e de ano 2023");
-        Carro.setValor(93_100.23);
+            if (contaLogada == null) {
+                System.out.println("1. Criar Conta.");
+                System.out.println("2. Fazer Login.");
+                System.out.println("3. Sair.");
+            } else {
+                System.out.println("4. Cadastrar Transacao.");
+                System.out.println("5. Editar Transacao.");
+                System.out.println("6. Exibir HistoricoTransacao.");
+                System.out.println("7. Excluir Transacao.");
+                System.out.println("8. Fazer Logout.");
+                System.out.println("9. Sair.");
+            }
+
+            System.out.print("Escolha uma opcao: ");
+            opcao = scanner.nextInt();
+            scanner.nextLine(); // Limpar a quebra de linha deixada pelo nextInt()
+
+            switch (opcao) {
+                case 1 -> criarConta(scanner);
+                case 2 -> fazerLogin(scanner);
+                case 3, 9 -> System.out.println("Saindo do programa. Adeus!");
+                case 4 -> cadastrarTransacao(scanner);
+                case 5 -> editarTransacao(scanner);
+                case 6 -> exibirHistoricoTransacao();
+                case 7 -> excluirTransacao(scanner);
+                case 8 -> fazerLogout();
+                default -> System.out.println("Opcao invalida. Tente novamente.");
+            }
+        } while (opcao != 9);
+
+        scanner.close();
+    }
 
 
-        Despesas store = new  Despesas("debito", "mercado");
+    private static void criarConta(Scanner scanner) {
+        System.out.print("Nome: ");
+        String nome = scanner.nextLine();
+        System.out.print("Email: ");
+        String email = scanner.nextLine();
+        System.out.print("Senha: ");
+        String senha = scanner.nextLine();
 
-        store.setDescricao("teste");
+        Conta conta = new Conta(nome, email, senha);
+        contas.add(conta);
 
+        System.out.println("Conta criada com sucesso!");
+    }
 
-        System.out.println(teste.getNome());
-        System.out.println(teste.getEmail());
-        System.out.println(teste.getTransacao());
-        System.out.println(Pizza.getDescricao()); 
-        System.out.println(store.getFormaDePagamento());
-        System.out.println(store.getDescricao());
-        System.out.println(store.obterCategoria());
+    private static void fazerLogin(Scanner scanner) {
+        if (contaLogada != null) {
+            System.out.println("Voce ja esta logado como " + contaLogada.getEmail());
+            return;
+        }
 
+        System.out.print("Email: ");
+        String email = scanner.nextLine();
+        System.out.print("Senha: ");
+        String senha = scanner.nextLine();
 
+        for (Conta conta : contas) {
+            if (conta.getEmail().equals(email) && conta.getSenha().equals(senha)) {
+                contaLogada = conta;
+                System.out.println("Login bem-sucedido!");
+                return;
+            }
+        }
+
+        System.out.println("Email ou senha incorretos. Login falhou.");
+    }
+
+    private static void fazerLogout() {
+        if (contaLogada == null) {
+            System.out.println("Nenhum usuario logado.");
+            return;
+        }
+
+        System.out.println("Logout bem-sucedido. Adeus, " + contaLogada.getNome() + "!");
+        contaLogada = null;
+    }
+
+    private static void cadastrarTransacao(Scanner scanner) {
+        if (contaLogada == null) {
+            System.out.println("Voce precisa fazer login antes de cadastrar uma transacao.");
+            return;
+        }
+
+        System.out.print("Data da Transacao: ");
+        String data = scanner.nextLine();
+        System.out.print("Descricao: ");
+        String descricao = scanner.nextLine();
+        System.out.print("Valor: ");
+        double valor = scanner.nextDouble();
+        scanner.nextLine(); // Limpar a quebra de linha deixada pelo nextDouble()
+
+        System.out.print("Forma de Pagamento: ");
+        String formaDePagamento = scanner.nextLine();
+        System.out.print("Categoria: ");
+        String categoria = scanner.nextLine();
+
+        Transacao transacao = new Transacao(contaLogada.getId(), data, descricao, valor, formaDePagamento, categoria);
+        historico.adicionarTransacao(transacao); // Certifique-se de que você está usando o objeto historico aqui
+        System.out.println("Transacao cadastrada com sucesso!");
+    }
+
+    private static void editarTransacao(Scanner scanner) {
+        if (contaLogada == null) {
+            System.out.println("Voce precisa fazer login antes de editar uma transacao.");
+            return;
+        }
+
+        System.out.print("ID da Transacao: ");
+        int idTransacao = scanner.nextInt();
+        scanner.nextLine(); // Limpar a quebra de linha deixada pelo nextInt()
+
+        List<Transacao> transacoes = contaLogada.getTransacoes();
+
+        for (Transacao transacao : transacoes) {
+            if (transacao.getId() == idTransacao) {
+                System.out.print("Nova Data da Transacao: ");
+                String novaData = scanner.nextLine();
+                System.out.print("Nova Descricao: ");
+                String novaDescricao = scanner.nextLine();
+                System.out.print("Novo Valor: ");
+                double novoValor = scanner.nextDouble();
+                scanner.nextLine(); // Limpar a quebra de linha deixada pelo nextDouble().
+
+                transacao.setData(novaData);
+                transacao.setDescricao(novaDescricao);
+                transacao.setValor(novoValor);
+
+                System.out.println("Transacao editada com sucesso!");
+                return;
+            }
+        }
+
+        System.out.println("Transacao nao encontrada.");
+    }
+
+    
+
+    private static void exibirHistoricoTransacao() {
+        if (contaLogada == null) {
+            System.out.println("Voce precisa fazer login antes de exibir as transacoes.");
+            return;
+        }
+
+        List<Transacao> historicTransacaos = historico.getHistorico();
+
+        if (historicTransacaos.isEmpty()) {
+            System.out.println("Nenhuma transacao encontrada para esta conta.");
+        } else {
+            System.out.println("Historico de transacao:");
+            for (Transacao transacao : historicTransacaos) {
+                System.out.println(transacao);
+            }
+        }
+     }
+        
+
+    private static void excluirTransacao(Scanner scanner) {
+        if (contaLogada == null) {
+            System.out.println("Voce precisa fazer login antes de excluir uma transacao.");
+            return;
+        }
+
+        System.out.print("ID da Transacao: ");
+        int idTransacao = scanner.nextInt();
+        scanner.nextLine(); // Limpar a quebra de linha deixada pelo nextInt()
+
+        List<Transacao> transacoes = contaLogada.getTransacoes();
+
+        for (Transacao transacao : transacoes) {
+            if (transacao.getId() == idTransacao) {
+                transacoes.remove(transacao);
+                System.out.println("Transacao excluida com sucesso!");
+                return;
+            }
+        }
+
+        System.out.println("Transacao nao encontrada.");
     }
 }

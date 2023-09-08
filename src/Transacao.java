@@ -1,29 +1,30 @@
 public class Transacao {
     private int id;
-    
+    private int idConta; // ID da conta associada à transação.
     private String data;
-
     private String descricao;
-
     private double valor;
+    private static int totalTransacoes;
 
-    public Transacao() {
-
-        this.id = id;
+    public Transacao(int idConta, String data, String descricao, double valor, String formaDePagamento, String categoria) {
+        Transacao.totalTransacoes++;
+        this.id = Transacao.totalTransacoes;
+        this.idConta = idConta;
         this.data = data;
         this.descricao = descricao;
         this.valor = valor;
     }
 
-    public String obterCategoria(){
-        String categoria = getDescricao();
-
-        return "a sua categoria é: " + categoria;
-
-    }
-
     public int getId() {
         return id;
+    }
+
+    public int getIdConta() {
+        return idConta;
+    }
+
+    public void setIdConta(int idConta) {
+        this.idConta = idConta;
     }
 
     public void setId(int id) {
@@ -34,16 +35,8 @@ public class Transacao {
         return data;
     }
 
-    public void setData(String data) {
-        this.data = data;
-    }
-
     public String getDescricao() {
         return descricao;
-    }
-
-    public void setDescricao(String desc) {
-        this.descricao = desc;
     }
 
     public double getValor() {
@@ -53,5 +46,25 @@ public class Transacao {
     public void setValor(double valor) {
         this.valor = valor;
     }
-}
 
+    public static int getTotalTransacoes() {
+        return totalTransacoes;
+    }
+
+    public static void setTotalTransacoes(int totalTransacoes) {
+        Transacao.totalTransacoes = totalTransacoes;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+
+    @Override
+    public String toString() {
+        return "Transacao [id=" + id + ", idConta=" + idConta + ", data=" + data + ", descricao=" + descricao + ", valor=" + valor + "]";
+    }
+}
